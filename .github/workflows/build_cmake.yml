@@ -26,8 +26,8 @@ jobs:
         - {
             name: "Ubuntu Latest GCC",
             os: ubuntu-latest,
-            cc: "gcc",
-            cxx: "g++"
+            cc: "gcc-8",
+            cxx: "g++-8"
           }
         - {
             name: "macOS Latest Clang",
@@ -39,6 +39,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Test
-      run: cmake .
+    - name: Install compiler
+      if: ${{matrix.os == 'ubuntu-latest'}}
+      run: sudo apt-get install -y --no-recommends gcc-8 g++-8
+
+    - name: Configure
+      run: cmake . --target ninja
+
+    - name: Build
+      run: cmake --build .
 
