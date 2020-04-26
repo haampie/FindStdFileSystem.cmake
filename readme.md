@@ -10,7 +10,7 @@ This project provides a cmake file that adds an interface target to which you ca
 
 Copy the contents of `cmake/` to your project.
 
-Add `find_package(StdFileSystem)` to add the `std::filesystem` target.
+Add `find_package(StdFileSystem)` to get the `std::filesystem` target.
 
 Link your target via `target_link_libraries(my_target std::filesystem)`.
 

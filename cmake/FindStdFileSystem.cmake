@@ -1,5 +1,4 @@
-SET(CXX_STANDARD 17)
-
+# If it was included already, return early
 if(TARGET std::filesystem)
     return()
 endif()
