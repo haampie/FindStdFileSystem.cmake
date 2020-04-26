@@ -3,48 +3,38 @@ name: CMake Build Matrix
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: ${{ matrix.config.name }}
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - {
-            name: "Windows Latest MSVC",
-            os: windows-latest,
-            cc: "cl",
-            cxx: "cl",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-          }
-        - {
-            name: "Windows Latest MinGW",
-            os: windows-latest,
-            cc: "gcc",
-            cxx: "g++"
-          }
-        - {
-            name: "Ubuntu Latest GCC",
-            os: ubuntu-latest,
-            cc: "gcc-8",
-            cxx: "g++-8"
-          }
-        - {
-            name: "macOS Latest Clang",
-            os: macos-latest,
-            cc: "clang",
-            cxx: "clang++"
-          }
-
+  linux:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-
     - name: Install compiler
-      if: ${{matrix.os}} == 'ubuntu-latest'
       run: sudo apt-get install -y --no-install-recommends gcc-8 g++-8
-
-    - name: Configure
-      run: cmake -Gninja . 
-
     - name: Build
-      run: ninja
+      run: |
+          mkdir build
+          cd build
+          cmake ..
+          make VERBOSE=1
+
+  mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: |
+          mkdir build
+          cd build
+          cmake ..
+          make VERBOSE=1
+
+  windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install ninja
+      run: choco install ninja
+    - name: Build
+      run: |
+          cmake -Gninja .
+          ninja
+
