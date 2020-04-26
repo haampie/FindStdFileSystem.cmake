@@ -1,4 +1,4 @@
-name: CMake Build Matrix
+name: Build Linux, macOS, Windows
 
 on: [push, pull_request]
 
