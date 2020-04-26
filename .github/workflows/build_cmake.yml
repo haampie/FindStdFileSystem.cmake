@@ -34,10 +34,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: ilammy/msvc-dev-cmd@v1
     - name: Build
-      shell: powershell
       run: |
-          . "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           cmake -G "NMake Makefiles" .
           nmake
 
