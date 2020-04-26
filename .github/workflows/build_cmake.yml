@@ -10,10 +10,13 @@ jobs:
     - name: Install compiler
       run: sudo apt-get install -y --no-install-recommends gcc-8 g++-8
     - name: Build
+      env:
+        CC: gcc-8
+        CXX: g++-8
       run: |
           mkdir build
           cd build
-          CC=gcc-8 CXX=g++-8 cmake ..
+          cmake ..
           make VERBOSE=1
 
   mac:
@@ -34,7 +37,11 @@ jobs:
     - name: Install ninja
       run: choco install ninja
     - name: Build
+      env:
+        CC: cl
+        CXX: cl
       run: |
+          call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
           cmake -GNinja .
           ninja
 
