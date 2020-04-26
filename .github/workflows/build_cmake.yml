@@ -34,14 +34,13 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install ninja
-      run: choco install ninja
     - name: Build
       env:
         CC: cl
         CXX: cl
+      shell: powershell
       run: |
-          call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat"
-          cmake -GNinja .
-          ninja
+          . "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          cmake -G "NMake Makefiles" .
+          nmake
 
