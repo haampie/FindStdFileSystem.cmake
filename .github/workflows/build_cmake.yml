@@ -40,8 +40,8 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install compiler
-      if: ${{matrix.os}} == 'ubuntu-latest'}}
-      run: sudo apt-get install -y --no-recommends gcc-8 g++-8
+      if: ${{matrix.os}} == 'ubuntu-latest'
+      run: sudo apt-get install -y --no-install-recommends gcc-8 g++-8
 
     - name: Configure
       run: cmake -Gninja . 
