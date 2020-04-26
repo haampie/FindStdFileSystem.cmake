@@ -40,12 +40,11 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install compiler
-      if: ${{matrix.os == 'ubuntu-latest'}}
+      if: ${{matrix.os}} == 'ubuntu-latest'}}
       run: sudo apt-get install -y --no-recommends gcc-8 g++-8
 
     - name: Configure
-      run: cmake . --target ninja
+      run: cmake -Gninja . 
 
     - name: Build
-      run: cmake --build .
-
+      run: ninja
